@@ -15,7 +15,7 @@ S=${WORKDIR}/${PN}-${PV}
 LICENSE="Amazon"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-RESTRICT="mirror"
+RESTRICT="primaryuri"
 
 DEPEND="app-arch/unzip"
 RDEPEND="virtual/jre"

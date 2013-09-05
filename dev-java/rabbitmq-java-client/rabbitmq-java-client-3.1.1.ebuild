@@ -8,8 +8,6 @@ JAVA_PKG_IUSE="doc source"
 
 inherit eutils java-pkg-2 java-ant-2 versionator
 
-RESTRICT='mirror'
-
 DESCRIPTION=""
 HOMEPAGE="http://www.rabbitmq.com/java-client.html"
 SRC_URI="http://www.rabbitmq.com/releases/rabbitmq-java-client/v${PV}/rabbitmq-java-client-${PV}.tar.gz"
@@ -19,6 +17,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 IUSE=""
+RESTRICT='primaryuri'
+
 
 COMMON_DEP=">=dev-java/junit-3.8
     >=dev-java/commons-cli-1.1

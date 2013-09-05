@@ -19,7 +19,7 @@ LICENSE="EPL-1.0"
 SLOT="4.3"
 KEYWORDS="~amd64"
 IUSE=""
-RESTRICT="mirror"
+RESTRICT="primaryuri"
 
 
 RDEPEND="

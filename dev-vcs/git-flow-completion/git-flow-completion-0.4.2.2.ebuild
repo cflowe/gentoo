@@ -17,7 +17,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x64 ~x86"
 IUSE=""
-RESTRICT="mirror"
+RESTRICT="primaryuri"
 
 DEPEND=">=dev-vcs/git-1.7.1"
 RDEPEND="${DEPEND}"

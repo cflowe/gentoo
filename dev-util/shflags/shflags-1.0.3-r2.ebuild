@@ -14,6 +14,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="amd64 arm x86"
 IUSE="examples"
+RESTRICT="primaryuri"
 
 src_test() {
 	cd src

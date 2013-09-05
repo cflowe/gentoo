@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 LICENSE="GPL-3"
 SLOT="0"
 IUSE="examples test"
-RESTRICT="mirror"
+RESTRICT="primaryuri"
 
 DEPEND="test? (
 		dev-python/nose

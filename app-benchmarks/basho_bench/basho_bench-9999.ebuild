@@ -12,7 +12,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
-RESTRICT="mirror"
+RESTRICT="primaryuri"
 
 DEPEND=">=dev-lang/erlang-5.2.3.1
 >=dev-lang/R-2

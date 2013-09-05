@@ -13,7 +13,7 @@ HOMEPAGE="http://www.gradle.org/"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-RESTRICT="mirror"
+RESTRICT="primaryuri"
 
 DEPEND="app-arch/zip"
 RDEPEND=">=virtual/jdk-1.5

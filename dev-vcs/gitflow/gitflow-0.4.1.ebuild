@@ -15,7 +15,7 @@ LICENSE="AS-IS"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="-completion"
-RESTRICT="mirror"
+RESTRICT="primaryuri"
 
 RDEPEND="completion? ( dev-vcs/git-flow-completion )
 	>=dev-util/shflags-1.0.3"

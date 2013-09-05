@@ -15,6 +15,7 @@ LICENSE="GPL-2 MPL-1.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="primaryuri"
 
 RDEPEND="dev-lang/erlang"
 DEPEND="${RDEPEND}
