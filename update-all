@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+basedir=$(dirname $(dirname $(realpath $0)))
+
+for dir in $(find $(dirname $0) -maxdepth 2 -mindepth 2 -type d ! -regex '.*/\.git/.*' 2>/dev/null)
+do
+  export DISTDIR=$dir
+  export PORTDIR_OVERLAY=$dir
+
+  find "$dir" -name '*.ebuild' -print0 \
+    | xargs -r0i ebuild {} manifest
+
+  dist="$basedir/distfiles/$(basename ${dir}).tar"
+
+  echo "Creating $dist"
+
+  tar -C $dir \
+    --exclude .git \
+    --exclude .hg \
+    --exclude .svn \
+    --exclude CVS \
+    -c -f "$dist" .
+done
