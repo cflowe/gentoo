@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+. $(dirname $0)/functions
+
+basedir=$(dirname $(dirname $(realpath $0)))
+
+for dir
+do
+  update $basedir $dir
+done
