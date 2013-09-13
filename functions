@@ -1,0 +1,19 @@
+#!/bin/bash
+function update {
+  basedir="$1"
+  dir="$2"
+
+  find "$dir" -name '*.ebuild' -print0 \
+    | xargs -r0i env PORTDIR_OVERLAY=$dir DISTDIR=$dir ebuild {} manifest
+
+  dist="$basedir/distfiles/$(basename ${dir}).tar"
+
+  echo "Creating $dist"
+
+  tar -C $dir \
+    --exclude .git \
+    --exclude .hg \
+    --exclude .svn \
+    --exclude CVS \
+    -c -f "$dist" .
+}
