@@ -2,7 +2,7 @@
 set -e
 . $(dirname $0)/functions
 
-basedir=$(dirname $(dirname $(realpath $0)))
+basedir=$(dirname $(realpath $0))
 
 for dir in $(find $(dirname $0) -maxdepth 2 -mindepth 2 -type d ! -regex '.*/\.git/.*' 2>/dev/null)
 do

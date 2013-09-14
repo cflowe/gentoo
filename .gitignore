@@ -1,3 +1,5 @@
+distfiles
 *.gz
 *.zip
 *.tgz
+*.portage_lockfile

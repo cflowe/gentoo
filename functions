@@ -4,7 +4,7 @@ function update {
   dir="$2"
 
   find "$dir" -name '*.ebuild' -print0 \
-    | xargs -r0i env PORTDIR_OVERLAY=$dir DISTDIR=$dir ebuild {} manifest
+    | xargs -r0i env PORTDIR_OVERLAY=$basedir DISTDIR=$dir ebuild {} manifest
 
   dist="$basedir/distfiles/$(basename ${dir}).tar"
 
