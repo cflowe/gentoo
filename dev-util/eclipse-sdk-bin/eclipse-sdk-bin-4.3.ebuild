@@ -7,13 +7,13 @@ EAPI=5
 inherit eutils
 
 SR=SR${PV#*.*.}
-SRC_BASE="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/juno/${SR}/eclipse-java-juno-${SR}-linux-gtk"
+SRC_BASE='http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/kepler/R/eclipse-standard-kepler-R-linux-gtk'
 
 DESCRIPTION="Eclipse SDK"
 HOMEPAGE="http://www.eclipse.org"
 SRC_URI="
-	amd64? ( ${SRC_BASE}-x86_64.tar.gz&r=1 -> eclipse-java-juno-${SR}-linux-gtk-x86_64-${PV}.tar.gz )
-	x86? ( ${SRC_BASE}.tar.gz&r=1 -> eclipse-java-juno-${SR}-linux-gtk-${PV}.tar.gz )"
+	amd64? ( ${SRC_BASE}-x86_64.tar.gz&r=1 -> eclipse-java-kepler-${SR}-linux-gtk-x86_64-${PV}.tar.gz )
+	x86? ( ${SRC_BASE}.tar.gz&r=1 -> eclipse-java-kepler-${SR}-linux-gtk-${PV}.tar.gz )"
 
 LICENSE="EPL-1.0"
 SLOT="4.3"
