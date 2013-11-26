@@ -20,9 +20,10 @@ RESTRICT="primaryuri"
 DEPEND="
   dev-vcs/git
   >=dev-lang/perl-5
-  dev-perl/Parallel-ForkManager
-  dev-perl/Term-ProgressBar
+  dev-perl/Parallel-Iterator
 "
+
+#  dev-perl/Term-ProgressBar
 
 RDEPEND="$DEPEND"
 
