@@ -6,6 +6,7 @@ function update {
   find "$dir" -name '*.ebuild' -print0 \
     | xargs -r0i env PORTDIR_OVERLAY=$basedir DISTDIR=$dir ebuild {} manifest
 
+  mkdir -p "$basedir/distfiles"
   dist="$basedir/distfiles/$(basename ${dir}).tar"
 
   echo "Creating $dist"
