@@ -16,6 +16,8 @@ inherit distutils-r1
 MY_PN="pyDatalog"
 MY_P="${MY_PN}-${PV}"
 
+S="${WORKDIR}/${MY_P}"
+
 DESCRIPTION="A pure-python implementation of Datalog, a truly declarative language derived from prolog.  Run logic queries on databases or python objects, and use logic clauses to define python classes."
 HOMEPAGE="https://sites.google.com/site/pydatalog/"
 SRC_URI="https://pypi.python.org/packages/source/p/pyDatalog/${MY_P}.zip"
