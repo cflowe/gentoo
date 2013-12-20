@@ -3,3 +3,4 @@ distfiles
 *.zip
 *.tgz
 *.portage_lockfile
+tmp
