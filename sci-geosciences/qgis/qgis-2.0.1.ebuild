@@ -20,9 +20,15 @@ KEYWORDS="~amd64 ~x86"
 IUSE="examples gps grass gsl postgres python spatialite test"
 
 RDEPEND="
+	examples? (
+		app-text/txt2tags
+		dev-texlive/texlive-latexextra
+		dev-texlive/texlive-genericrecommended
+	)
 	dev-libs/expat
 	sci-geosciences/gpsbabel
-	>=sci-libs/gdal-1.6.1[geos,python?]
+	>=sci-libs/gdal-1.6.1[geos,python?,spatialite?]
+	>=sci-libs/libspatialindex-1.8
 	sci-libs/geos
 	sci-libs/gsl
 	dev-qt/qtcore:4
@@ -44,10 +50,14 @@ DEPEND="${RDEPEND}
 	sys-devel/bison
 	sys-devel/flex"
 
-DOCS=( BUGS ChangeLog CODING.pdf README )
+DOCS=( BUGS ChangeLog CODING README )
 
 # Does not find the test binaries at all
 RESTRICT="test"
+
+PATCHES=(
+        "${FILESDIR}"/${PN}-2.0.1-pdflatex.patch
+)
 
 pkg_setup() {
 	python_set_active_version 2

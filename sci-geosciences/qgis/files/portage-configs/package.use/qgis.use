@@ -1,6 +1,7 @@
-sci-geosciences/qgis examples grass gsl spatialite python
+# disable examples since latex docs fail to build
+sci-geosciences/qgis -examples grass gsl spatialite python
 >=dev-qt/qtwebkit-4.8.5 icu
 >=sci-libs/gdal-1.9.2 geos -pdf
 >=sci-geosciences/grass-6.4.2 python
->=sci-libs/gdal-1.9.2 python
+>=sci-libs/gdal-1.9.2 python spatialite
 >=dev-python/PyQt4-4.10.2 sql

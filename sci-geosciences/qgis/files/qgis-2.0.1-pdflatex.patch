@@ -1,0 +1,17 @@
+--- qgis-2.0.1.orig/doc/build.sh  2014-01-06 16:00:16.106197062 -0500
++++ qgis-2.0.1/doc/build.sh 2014-01-06 16:00:26.226196863 -0500
+@@ -17,10 +17,10 @@
+ txt2tags -o ../INSTALL -t txt INSTALL.t2t 
+ txt2tags -o INSTALL.html -t html INSTALL.t2t
+ txt2tags -o INSTALL.tex -t tex INSTALL.t2t
+-pdflatex INSTALL.tex
+-mv INSTALL.pdf ..
++#pdflatex INSTALL.tex
++#mv INSTALL.pdf ..
+ txt2tags -o ../CODING -t txt CODING.t2t
+ txt2tags -o CODING.html -t html CODING.t2t
+ txt2tags -o CODING.tex -t tex CODING.t2t
+-pdflatex CODING.tex
+-mv CODING.pdf ..
++#pdflatex CODING.tex
++#mv CODING.pdf ..
