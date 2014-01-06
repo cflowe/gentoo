@@ -6,6 +6,7 @@ EAPI=5
 
 PYTHON_COMPAT=(python2_7)
 PYTHON_USE_WITH="sqlite"
+PYTHON_DEPEND="python? 2"
 
 inherit python cmake-utils eutils multilib
 
@@ -27,7 +28,7 @@ RDEPEND="
 	)
 	dev-libs/expat
 	sci-geosciences/gpsbabel
-	>=sci-libs/gdal-1.6.1[geos,python?,spatialite?]
+	>=sci-libs/gdal-1.6.1[geos,python_targets_python2_7,spatialite?]
 	>=sci-libs/libspatialindex-1.8
 	sci-libs/geos
 	sci-libs/gsl
@@ -40,7 +41,7 @@ RDEPEND="
 	x11-libs/qwtpolar
 	grass? ( >=sci-geosciences/grass-6.0.0[python?] )
 	postgres? ( >=dev-db/postgresql-base-8.4 )
-	python? ( dev-python/PyQt4[X,sql,svg] )
+	python? ( dev-python/PyQt4[X,sql,svg] dev-python/qscintilla-python )
 	spatialite? (
 		dev-db/sqlite:3
 		dev-db/spatialite
