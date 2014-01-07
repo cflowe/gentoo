@@ -37,10 +37,11 @@ RDEPEND="
 	dev-qt/qtsvg:4
 	dev-qt/qtsql:4
 	dev-qt/qtwebkit:4
+	dev-python/PyQt4 [webkit]
 	x11-libs/qwt:5[svg]
 	x11-libs/qwtpolar
 	grass? ( >=sci-geosciences/grass-6.0.0[python?] )
-	postgres? ( >=dev-db/postgresql-base-8.4 )
+	postgres? ( >=dev-db/postgresql-base-8.4 dev-python/psycopg)
 	python? ( dev-python/PyQt4[X,sql,svg] dev-python/qscintilla-python )
 	spatialite? (
 		dev-db/sqlite:3
