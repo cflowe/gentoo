@@ -1,0 +1,16 @@
+--- Makefile.orig 2014-10-24 16:00:20.208886505 -0400
++++ Makefile  2014-10-24 16:02:57.228881787 -0400
+@@ -15,7 +15,6 @@
+ # under the License.
+ #
+ 
+-
+ ERLFLAGS= -pa $(CURDIR)/.eunit -pa $(CURDIR)/ebin -pa $(CURDIR)/deps/*/ebin
+ 
+ DEPS_PLT=$(CURDIR)/.deps_plt
+@@ -146,3 +145,5 @@
+  - rm -rvf $(CURDIR)/deps
+ 
+ rebuild: distclean deps compile escript dialyzer test
++
++.NOTPARALLEL:
