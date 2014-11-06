@@ -1,0 +1,12 @@
+--- build/cmake/Modules/FindMySQL.cmake	2014-10-01 16:51:12.819348434 -0400
++++ build/cmake/Modules/FindMySQL.cmake	2014-10-01 16:49:50.496018425 -0400
+@@ -55,7 +55,8 @@
+     SET(MYSQL_LIBRARY_NAMES mysqlclient mysqlclient_r)
+     FIND_LIBRARY(MYSQL_LIBRARIES
+                NAMES ${MYSQL_LIBRARY_NAMES}
+-               PATHS /usr/lib
++               PATHS /usr/lib64
++                     /usr/lib
+ 	             /usr/local/lib
+ 		     /usr/local/mysql/lib
+ 		     /opt/mysql/mysql/lib

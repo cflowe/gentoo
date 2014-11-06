@@ -1,0 +1,10 @@
+--- library/base/file_utilities.cpp	2014-10-01 17:37:05.165903962 -0400
++++ library/base/file_utilities.cpp	2014-10-01 17:36:58.042570916 -0400
+@@ -33,6 +33,7 @@
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <sys/file.h>
++#include <unistd.h>
+ #endif
+ 
+ namespace base {

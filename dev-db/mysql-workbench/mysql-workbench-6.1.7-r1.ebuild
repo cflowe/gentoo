@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-db/mysql-workbench/mysql-workbench-6.0.9.ebuild,v 1.1 2014/02/08 09:37:50 graaff Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-db/mysql-workbench/mysql-workbench-6.1.7.ebuild,v 1.3 2014/08/25 19:34:11 graaff Exp $
 
 EAPI=5
 GCONF_DEBUG="no"
@@ -25,7 +25,6 @@ IUSE="debug doc gnome-keyring +iodbc"
 
 # glibc: deprecated mutex functions, removed in 2.36.0
 CDEPEND="${PYTHON_DEPS}
-		>=dev-lang/swig-1.3
 		dev-libs/glib:2
 		dev-cpp/atkmm
 		dev-cpp/pangomm
@@ -60,13 +59,19 @@ RDEPEND="${CDEPEND}
 		>=sys-apps/net-tools-1.60_p20120127084908"
 
 DEPEND="${CDEPEND}
+		dev-lang/swig
 		virtual/pkgconfig"
 
 S="${WORKDIR}"/"${MY_P}"
 
 src_prepare() {
 	## Patch CMakeLists.txt
-	epatch "${FILESDIR}/${PN}-6.0.8-CMakeLists.patch"
+	epatch "${FILESDIR}/${PN}-6.0.8-CMakeLists.patch" \
+		"${FILESDIR}/${P}-wbcopytables.patch" \
+		"${FILESDIR}/${P}-mysql_options4.patch" \
+		"${FILESDIR}/${P}-findmysql.patch" \
+		"${FILESDIR}/${P}-inttypes.patch" \
+		"${FILESDIR}/${P}-file_utils.patch"
 
 	## remove hardcoded CXXFLAGS
 	sed -i -e 's/-O0 -g3//' ext/scintilla/gtk/CMakeLists.txt || die
@@ -86,4 +91,9 @@ src_configure() {
 		-DPYTHON_LIBRARY="$(python_get_library_path)"
 	)
 	cmake-utils_src_configure
+}
+
+src_compile() {
+	# Work around parallel build issues, bug 507838
+	cmake-utils_src_compile -j1
 }

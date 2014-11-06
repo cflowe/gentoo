@@ -1,0 +1,25 @@
+--- library/base/base/string_utilities.h	2014-10-01 17:39:35.779231214 -0400
++++ library/base/base/string_utilities.h	2014-10-01 17:39:18.759231902 -0400
+@@ -26,6 +26,9 @@
+ # endif
+ #else
+ # include <inttypes.h>
++# ifndef PRId64
++#   define PRId64 "lld"
++# endif
+ #endif
+ 
+ #include "common.h"
+@@ -36,10 +39,12 @@
+ 
+ #define _(s) s // TODO: replace with localization code.
+ 
++#ifdef _WIN32
+ #include <boost/cstdint.hpp>
+ 
+ using boost::uint64_t;
+ using boost::int64_t;
++#endif
+ 
+ namespace base
+ {
