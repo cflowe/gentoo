@@ -7,7 +7,7 @@ basedir=$(dirname $0)
 # This is missing profiles/repo_name since include that file would caused
 # duplicate repo names
 
-(find "$basedir" -maxdepth 3 -name "*.ebuild" | xargs -n1 dirname \
+(find "$basedir" -maxdepth 3 -name "*.ebuild" | xargs dirname \
   | sort | uniq | xargs find && echo metadata/layout.conf) \
   | cpio -o -H ustar --force-local \
   -O "$basedir"/distfiles/cflowe-local.tar
