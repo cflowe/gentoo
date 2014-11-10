@@ -1,5 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/sci-geosciences/qgis/qgis-1.7.0.ebuild,v 1.7 2014/01/06 14:52:37 jlec Exp $
 
 EAPI=5
 
@@ -27,7 +28,7 @@ RDEPEND="
 	)
 	dev-libs/expat
 	sci-geosciences/gpsbabel
-	>=sci-libs/gdal-1.6.1[geos,python?,spatialite?]
+	>=sci-libs/gdal-1.6.1[geos,python_targets_python2_7,spatialite?]
 	>=sci-libs/libspatialindex-1.8
 	sci-libs/geos
 	sci-libs/gsl
@@ -36,11 +37,12 @@ RDEPEND="
 	dev-qt/qtsvg:4
 	dev-qt/qtsql:4
 	dev-qt/qtwebkit:4
-	x11-libs/qwt:5[svg]
+	dev-python/PyQt4[webkit]
+	x11-libs/qwt:6[svg]
 	x11-libs/qwtpolar
 	grass? ( >=sci-geosciences/grass-6.0.0[python?] )
-	postgres? ( >=dev-db/postgresql-base-8.4 )
-	python? ( dev-python/PyQt4[X,sql,svg] )
+	postgres? ( >=dev-db/postgresql-base-8.4 dev-python/psycopg )
+	python? ( dev-python/PyQt4[X,sql,svg] dev-python/qscintilla-python )
 	spatialite? (
 		dev-db/sqlite:3
 		dev-db/spatialite
