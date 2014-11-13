@@ -1,0 +1,2 @@
+=dev-libs/openssl-1.0.1j -bindist
+=dev-libs/libpcre-8.35 pcre16

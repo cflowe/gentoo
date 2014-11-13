@@ -1,0 +1,7 @@
+=dev-db/pgmodeler-0.7.2 ~amd64
+=x11-libs/libxkbcommon-0.5.0 ~amd64
+=dev-qt/qtcore-5.3.2 ~amd64
+=dev-qt/qtgui-5.3.2 ~amd64
+=dev-qt/qtnetwork-5.3.2 ~amd64
+=dev-qt/qtprintsupport-5.3.2 ~amd64
+=dev-qt/qtwidgets-5.3.2 ~amd64
