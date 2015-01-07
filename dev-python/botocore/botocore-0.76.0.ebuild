@@ -18,8 +18,8 @@ IUSE="test"
 
 RDEPEND="dev-python/jmespath[${PYTHON_USEDEP}]
 	dev-python/python-dateutil:0[${PYTHON_USEDEP}]
-	dev-python/requests[${PYTHON_USEDEP}]
-	dev-python/six[${PYTHON_USEDEP}]"
+	>=dev-python/requests-2.1.0[${PYTHON_USEDEP}]
+	>=dev-python/six-1.6.8[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}
 	test? ( dev-python/mock[${PYTHON_USEDEP}]
 		dev-python/nose[${PYTHON_USEDEP}] )"
