@@ -24,7 +24,7 @@ DEPEND="${RDEPEND}
 
 RESTRICT="test"
 
-DOCS=( README.md )
+DOCS=( README.rst )
 
 python_test() {
 	nosetests || die "Tests fail with ${EPYTHON}"
