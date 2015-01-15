@@ -1,7 +1,5 @@
-=dev-python/botocore-0.81.0 ~amd64
-#=dev-python/botocore-0.80.0 ~amd64
-#=dev-python/botocore-0.79.0 ~amd64
-=dev-python/botocore-0.78.0 ~amd64
+#=dev-python/botocore-0.81.0-r1 ~amd64
+#=dev-python/botocore-0.80.0-r1 ~amd64
+#=dev-python/botocore-0.79.0-r1 ~amd64
+#=dev-python/botocore-0.78.0-r1 ~amd64
 =dev-python/botocore-0.76.0-r1 ~amd64
-=dev-python/botocore-0.76.0 ~amd64
-=dev-python/jmespath-0.5.0 ~amd64
