@@ -1,0 +1,111 @@
+#!/sbin/runscript
+
+extra_commands="version"
+extra_started_commands="start_foreground"
+
+description_version="Shows the version of the server"
+description_start_foreground="Starts the server in the foreground (useful for debugging issues)"
+
+PIDFILE="${PIDFILE:-/run/cassandra.pid}"
+
+_setup_env() {
+	if [ -n "${CASSANDRA_INCLUDE:-}" ]; then
+		. "${CASSANDRA_INCLUDE}"
+	fi
+
+	# Use JAVA_HOME if set, otherwise look for java in PATH
+	if [ -n "$JAVA_HOME" ]; then
+		for java in "$JAVA_HOME"/bin/java; do
+			if [ -x "$java" ]; then
+				JAVA="$java"
+				break
+			fi
+		done
+	else
+		JAVA=java
+	fi
+
+	if [ -z $JAVA ] ; then
+		ewarn 'Unable to find java executable. Check JAVA_HOME and PATH environment variables.'
+		eend 1
+		exit 1
+	fi
+
+	# If numactl is available, use it. For Cassandra, the priority is to
+	# avoid disk I/O. Even for the purpose of CPU efficiency, we don't
+	# really have CPU<->data affinity anyway. Also, empirically test that
+	# numactl works before trying to use it (CASSANDRA-3245).
+	NUMACTL_ARGS="${NUMACTL_ARGS:---interleave=all}"
+	if which numactl >/dev/null 2>/dev/null && numactl $NUMACTL_ARGS ls / >/dev/null 2>/dev/null
+	then
+		NUMACTL="numactl $NUMACTL_ARGS"
+	else
+		NUMACTL=""
+	fi
+
+	if [ -z "$CASSANDRA_CONF" -o -z "$CLASSPATH" ]; then
+		ewarn 'You must set the CASSANDRA_CONF and CLASSPATH vars'
+		eend 1
+		exit 1
+	fi
+
+	if [ -f "$CASSANDRA_CONF/cassandra-env.sh" ]; then
+		. "$CASSANDRA_CONF/cassandra-env.sh"
+	fi
+}
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting cassandra"
+
+	_setup_env
+
+	start-stop-daemon --start \
+		--user cassandra:cassandra \
+		--pidfile ${PIDFILE} \
+		--start \
+		-- \
+		$NUMACTL "$JAVA" \
+		$JVM_OPTS \
+		$CASSANDRA_PROPERTIES \
+		-Dcassandra-pidfile=${PIDFILE} \
+		-cp "${CLASSPATH}:${CASSANDRA_CONF}" \
+		org.apache.cassandra.service.CassandraDaemon
+
+	eend $?
+}
+
+start_foreground() {
+	ebegin "Starting cassandra"
+
+	_setup_env
+
+	/sbin/runuser \
+		-g cassandra \
+		-u cassandra \
+		$NUMACTL "$JAVA" \
+		$JVM_OPTS \
+		$CASSANDRA_PROPERTIES \
+		-Dcassandra-pidfile=${PIDFILE} \
+		-Dcassandra-foreground=yes \
+		-cp "${CLASSPATH}:${CASSANDRA_CONF}" \
+		org.apache.cassandra.service.CassandraDaemon
+	eend $?
+}
+
+version() {
+	_setup_env
+
+	"$JAVA" -cp "${CLASSPATH}:${CASSANDRA_CONF}" \
+		org.apache.cassandra.tools.GetVersion
+}
+
+stop() {
+	ebegin "Stopping cassandra-daemon"
+	start-stop-daemon --stop --quiet \
+		--pidfile ${PIDFILE}
+	eend $?
+}
