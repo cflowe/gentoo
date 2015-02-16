@@ -1,0 +1,8 @@
+# vim: ft=conf
+/var/log/cassandra/cassandra.log {
+  size 10M
+  rotate 10
+  missingok
+  copytruncate
+  compress
+}

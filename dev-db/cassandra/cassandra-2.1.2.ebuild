@@ -85,21 +85,29 @@ src_install() {
 		|| die "Failed to install apache-${PN}-thrift.jar"
 
 	insinto /etc/cassandra
-	doins conf/*.{properties,yaml} || die "Failed to install some config files"
+	doins conf/*.{properties,yaml,xml,txt,sh} \
+		|| die "Failed to install some config files"
+
+	doins conf/hotspot_compiler \
+		|| die "Failed to install /etc/cassandra/hotspot_compiler"
 
 	insinto /etc/cassandra/triggers
 	doins conf/triggers/* \
 		|| die "Failed to setup the /etc/cassandra/triggers directory"
 
 	newconfd "${FILESDIR}/root/etc/conf.d/cassandra" cassandra \
-		|| die "Faild to install /etc/conf.d/cassandra"
+		|| die "Failed to install /etc/conf.d/cassandra"
 
 	newinitd "${FILESDIR}/root/etc/init.d/cassandra" cassandra \
-		|| die "Faild to install /etc/init.d/cassandra"
+		|| die "Failed to install /etc/init.d/cassandra"
 
 	insinto /etc/security/limits.d/cassandra.conf
 	doins "${FILESDIR}/root/etc/security/limits.d/cassandra.conf" \
-		|| die "Faild to install /etc/security/limits.d/cassandra.conf"
+		|| die "Failed to install /etc/security/limits.d/cassandra.conf"
+
+	insinto /etc/logrotate.d
+	doins "${FILESDIR}/root/etc/logrotate.d/cassandra.disabled" \
+		|| die "Failed to install /etc/logrotate.d/cassandra.disabled"
 
 	if use python; then
 		einfo 'Install Python library ...'

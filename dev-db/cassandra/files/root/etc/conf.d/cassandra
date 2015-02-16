@@ -24,7 +24,8 @@ CASSANDRA_HEAPDUMP_DIR=/var/log/cassandra/heapdump
 CASSANDRA_STORAGE_DIR=/var/lib/cassandra
 
 # Assign and -D properties for the java command line
-CASSANDRA_PROPERTIES="-Dlogback.configurationFile=logback.xml \
+CASSANDRA_PROPERTIES="\
+-Dlogback.configurationFile=logback.xml \
 -Dcassandra.logdir=/var/log/cassandra \
 -Dcassandra.storagedir=$CASSANDRA_STORAGE_DIR \
 "

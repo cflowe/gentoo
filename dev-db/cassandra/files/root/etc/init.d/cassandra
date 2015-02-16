@@ -1,6 +1,6 @@
 #!/sbin/runscript
 
-extra_commands="version"
+extra_commands="version show_env"
 extra_started_commands="start_foreground"
 
 description_version="Shows the version of the server"
@@ -66,6 +66,9 @@ start() {
 	start-stop-daemon --start \
 		--user cassandra:cassandra \
 		--pidfile ${PIDFILE} \
+		--background --make-pidfile \
+		--stdout /var/log/cassandra/cassandra.log \
+		--stderr /var/log/cassandra/cassandra.log \
 		--start \
 		-- \
 		$NUMACTL "$JAVA" \
@@ -84,8 +87,8 @@ start_foreground() {
 	_setup_env
 
 	/sbin/runuser \
-		-g cassandra \
 		-u cassandra \
+		-g cassandra \
 		$NUMACTL "$JAVA" \
 		$JVM_OPTS \
 		$CASSANDRA_PROPERTIES \
@@ -101,6 +104,11 @@ version() {
 
 	"$JAVA" -cp "${CLASSPATH}:${CASSANDRA_CONF}" \
 		org.apache.cassandra.tools.GetVersion
+}
+
+show_env() {
+	_setup_env
+	set
 }
 
 stop() {
