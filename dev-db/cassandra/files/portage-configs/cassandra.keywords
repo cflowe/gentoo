@@ -1,3 +1,5 @@
-=dev-db/cassandra-2.1.2 ~amd64 ~x86
-=virtual/jre-1.7.0 ~amd64 ~x86
-=virtual/jdk-1.7.0 ~amd64 ~x86
+=dev-db/cassandra-2.1.2-r1 ~amd64
+=virtual/jre-1.7.0 ~amd64
+=virtual/jdk-1.7.0 ~amd64
+=virtual/python-futures-0 ~amd64
+=dev-python/futures-2.2.0 ~amd64

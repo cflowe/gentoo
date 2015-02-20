@@ -25,6 +25,7 @@ IUSE="doc +examples +python"
 DEPEND=">=virtual/jdk-1.7 dev-java/ant"
 RDEPEND=">=virtual/jre-1.7
 	!dev-db/cassandra-bin
+	virtual/python-futures
 "
 
 pkg_setup() {
@@ -125,7 +126,7 @@ src_install() {
 		/var/lib/cassandra/saved_caches \
 		|| die "keepdir failed"
 
-	chown -R cassandra:cassandra \
+	fowners -R cassandra:cassandra \
 		"${D}/var/lib/cassandra" \
 		"${D}/var/log/cassandra" \
 		|| die "chown failed"
