@@ -22,7 +22,7 @@ fi
 
 # The directory where Cassandra's configs live (required)
 if [ "x$CASSANDRA_CONF" = "x" ]; then
-    CASSANDRA_HOME=$(source /etc/conf.d/cassandra && echo "$CASSANDRA_CONF")
+    CASSANDRA_CONF=$(source /etc/conf.d/cassandra && echo "$CASSANDRA_CONF")
 fi
 
 # This can be the path to a jar file, or a directory containing the 
