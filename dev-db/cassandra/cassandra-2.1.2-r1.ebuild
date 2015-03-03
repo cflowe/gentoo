@@ -127,8 +127,8 @@ src_install() {
 		|| die "keepdir failed"
 
 	fowners -R cassandra:cassandra \
-		"${D}/var/lib/cassandra" \
-		"${D}/var/log/cassandra" \
+		"/var/lib/cassandra" \
+		"/var/log/cassandra" \
 		|| die "chown failed"
 
 	dodoc \
