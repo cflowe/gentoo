@@ -56,7 +56,7 @@ DOCS=( BUGS ChangeLog CODING README )
 RESTRICT="test"
 
 PATCHES=(
-        "${FILESDIR}"/${PN}-2.0.1-pdflatex.patch
+	"${FILESDIR}"/patches/${PN}-2.0.1-pdflatex.patch
 )
 
 pkg_setup() {
