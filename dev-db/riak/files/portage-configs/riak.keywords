@@ -3,3 +3,5 @@
 =dev-db/riak-1.4.0 ~amd64
 =dev-db/riak-1.4.1 ~amd64
 =dev-db/riak-1.4.2 ~amd64
+=dev-db/riak-2.0.2 ~amd64
+=dev-db/riak-2.0.5 ~amd64
