@@ -5,3 +5,5 @@ sci-geosciences/qgis -examples grass gsl spatialite python
 >=sci-geosciences/grass-6.4.2 python
 >=sci-libs/gdal-1.9.2 python spatialite
 >=dev-python/PyQt4-4.10.2 sql webkit
+sci-libs/gdal sqlite
+dev-libs/icu abi_x86_32
