@@ -3,4 +3,5 @@ distfiles
 *.zip
 *.tgz
 *.portage_lockfile
+local_repo.xml
 tmp
