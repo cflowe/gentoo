@@ -1,0 +1,4 @@
+=app-admin/aws-cli-1.7.45 ~amd64
+=dev-python/botocore-1.1.8 ~amd64
+=dev-python/wheel-0.24.0 ~amd64
+=dev-python/jmespath-0.7.1 ~amd64
