@@ -1,0 +1,12 @@
+--- grass-6.4.2.orig/vector/v.univar/main.c	2010-09-22 06:40:19.000000000 -0400
++++ grass-6.4.2/vector/v.univar/main.c	2015-09-01 13:37:03.205181842 -0400
+@@ -37,7 +37,8 @@
+ struct line_cats *Cats;
+ int otype, ofield;
+ int compatible = 1;		/* types are compatible: point+centroid or line+boundary or area */
+-int nrec, ctype, nlines, line, nareas, area;
++int nrec, ctype, nlines, nareas, area;
++int line = 0;
+ int nmissing = 0;		/* number of missing atttributes */
+ int nnull = 0;		/* number of null values */
+ int nzero = 0;		/* number of zero distances */

@@ -1,0 +1,22 @@
+--- grass-6.4.2.orig/include/Make/Platform.make.in	2010-11-08 02:23:48.000000000 -0500
++++ grass-6.4.2/include/Make/Platform.make.in	2015-09-01 12:59:23.075940014 -0400
+@@ -185,7 +185,7 @@
+ LAPACKINC			= @LAPACKINC@
+ 
+ #GDAL/OGR
+-GDALLIBS            = @GDAL_LIBS@
++GDALLIBS            = @GDAL_DEP_LIBS@
+ GDALCFLAGS          = @GDAL_CFLAGS@
+ USE_GDAL            = @USE_GDAL@
+ USE_OGR             = @USE_OGR@
+
+--- grass-6.4.2.orig/configure.in     2012-02-06 05:16:07.000000000 -0500
++++ grass-6.4.2/configure.in       2015-09-01 13:26:11.875535766 -0400
+@@ -850,6 +850,7 @@
+ fi
+ 
+ AC_SUBST(GDAL_LIBS)
++AC_SUBST(GDAL_DEP_LIBS)
+ AC_SUBST(GDAL_CFLAGS)
+ AC_SUBST(USE_GDAL)
+ AC_SUBST(USE_OGR)

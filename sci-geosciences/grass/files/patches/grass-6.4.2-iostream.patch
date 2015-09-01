@@ -1,0 +1,387 @@
+--- grass-6.4.2.orig/include/iostream/mm.h	2008-12-19 15:29:33.000000000 -0500
++++ grass-6.4.2/include/iostream/mm.h	2015-09-01 11:05:20.400676729 -0400
+@@ -19,6 +19,7 @@
+ #ifndef _MM_H
+ #define _MM_H
+ 
++#include <new>
+ #include <sys/types.h>
+ 
+ 
+@@ -110,10 +111,10 @@
+   void print();
+ 
+   friend class mm_register_init;
+-  friend void * operator new(size_t);
+-  friend void * operator new[](size_t);
+-  friend void operator delete(void *);
+-  friend void operator delete[](void *);
++  friend void * operator new(size_t) throw (std::bad_alloc);
++  friend void * operator new[](size_t) throw (std::bad_alloc);
++  friend void operator delete(void *) throw ();
++  friend void operator delete[](void *) throw ();
+ };
+ 
+ 
+--- grass-6.4.2.orig/lib/iostream/mm.cc	2011-10-10 16:03:42.000000000 -0400
++++ grass-6.4.2/lib/iostream/mm.cc	2015-09-01 11:01:28.149066876 -0400
+@@ -256,7 +256,7 @@
+ 
+  
+ /* ************************************************************ */
+-void* operator new[] (size_t sz) {
++void* operator new[] (size_t sz) throw (std::bad_alloc) {
+   void *p;
+   
+   MM_DEBUG cout << "new: sz=" << sz << ", register " 
+@@ -307,7 +307,7 @@
+ 
+  
+ /* ************************************************************ */
+-void* operator new (size_t sz) {
++void* operator new (size_t sz) throw (std::bad_alloc) {
+   void *p;
+   
+   MM_DEBUG cout << "new: sz=" << sz << ", register " 
+@@ -359,7 +359,7 @@
+ 
+ 
+ /* ---------------------------------------------------------------------- */
+-void operator delete (void *ptr)  {
++void operator delete (void *ptr) throw()  {
+   size_t sz;
+   void *p;
+   
+@@ -399,7 +399,7 @@
+ 
+ 
+ /* ---------------------------------------------------------------------- */
+-void operator delete[] (void *ptr) {
++void operator delete[] (void *ptr) throw() {
+   size_t sz;
+   void *p;
+   
+--- grass-6.4.2.orig/include/iostream/minmaxheap.h	2010-04-17 08:15:22.000000000 -0400
++++ grass-6.4.2/include/iostream/minmaxheap.h	2015-09-01 14:49:55.377072545 -0400
+@@ -86,23 +86,23 @@
+ 			(long)((size+1)*sizeof(T)));
+     // MEMORY_LOG(str);
+     
+-    lastindex = 0;
++    this->lastindex = 0;
+     MY_LOG_DEBUG_ID("minmaxheap: allocation");
+-	A = allocateHeap(maxsize);
++	this->A = allocateHeap(this->maxsize);
+   };
+   
+   virtual ~BasicMinMaxHeap(void) { 
+     MY_LOG_DEBUG_ID("minmaxheap: deallocation");
+-	freeHeap(A);
++	freeHeap(this->A);
+   };
+ 
+   bool empty(void) const { return size() == 0; };
+   HeapIndex size() const { 
+-	assert(A ||  !lastindex);
+-    return lastindex; 
++	assert(this->A ||  !this->lastindex);
++    return this->lastindex; 
+   };
+ 
+-  T get(HeapIndex i) const { assert(i <= size()); return A[i]; }
++  T get(HeapIndex i) const { assert(i <= size()); return this->A[i]; }
+    
+   //build a heap from an array of elements; 
+   //if size > maxsize, insert first maxsize elements from array;
+@@ -193,9 +193,9 @@
+ template <class T> 
+ void BasicMinMaxHeap<T>::swap(HeapIndex a, HeapIndex b) {
+   T tmp;
+-  tmp = A[a];
+-  A[a] = A[b];
+-  A[b] = tmp;
++  tmp = this->A[a];
++  this->A[a] = this->A[b];
++  this->A[b] = tmp;
+ }
+ 
+ 
+@@ -206,7 +206,7 @@
+ T BasicMinMaxHeap<T>::leftChildValue(HeapIndex i) const {
+   HeapIndex p = leftChild(i);
+   assert(p <= size());
+-  return A[p];
++  return this->A[p];
+ }
+ 
+ // ----------------------------------------------------------------------
+@@ -216,7 +216,7 @@
+ T BasicMinMaxHeap<T>::rightChildValue(HeapIndex i) const {
+   HeapIndex p = rightChild(i);
+   assert(p <= size());
+-  return A[p];
++  return this->A[p];
+ }
+ 
+ 
+@@ -259,7 +259,7 @@
+   p = leftChild(i);
+   if(hasChildren(p)) {
+ 	q = smallestChild(p);
+-	if(A[p] > A[q]) p = q;
++	if(this->A[p] > this->A[q]) p = q;
+   }
+   // p is smallest of left child, its grandchildren
+   minpos = p;
+@@ -268,10 +268,10 @@
+ 	//p = rightChild(i);
+ 	if(hasChildren(p)) {
+ 	  q = smallestChild(p);
+-	  if(A[p] > A[q]) p = q;
++	  if(this->A[p] > this->A[q]) p = q;
+ 	}
+ 	// p is smallest of right child, its grandchildren
+-	if(A[p] < A[minpos]) minpos = p;
++	if(this->A[p] < this->A[minpos]) minpos = p;
+   }
+   return minpos;
+ }
+@@ -288,7 +288,7 @@
+   p = leftChild(i);
+   if(hasChildren(p)) {
+ 	q = largestChild(p);
+-	if(A[p] < A[q]) p = q;
++	if(this->A[p] < this->A[q]) p = q;
+   }
+   // p is smallest of left child, its grandchildren
+   maxpos = p;
+@@ -297,10 +297,10 @@
+ 	//p = rightChild(i);
+ 	if(hasChildren(p)) {
+ 	  q = largestChild(p);
+-	  if(A[p] < A[q]) p = q;
++	  if(this->A[p] < this->A[q]) p = q;
+ 	}
+ 	// p is smallest of right child, its grandchildren
+-	if(A[p] > A[maxpos]) maxpos = p;
++	if(this->A[p] > this->A[maxpos]) maxpos = p;
+   }
+   return maxpos;
+ }
+@@ -328,9 +328,9 @@
+     }
+     m = smallestChildGrandchild(i);
+     if(isGrandchildOf(i, m)) {
+-      if(A[m] < A[i]) {
++      if(this->A[m] < this->A[i]) {
+ 	swap(i, m);
+-	if(A[m] > A[parent(m)]) {
++	if(this->A[m] > this->A[parent(m)]) {
+ 	  swap(m, parent(m));
+ 	}
+ 	//trickleDownMin(m);
+@@ -339,7 +339,7 @@
+ 	done = true;
+       }
+     } else {
+-      if(A[m] < A[i]) {
++      if(this->A[m] < this->A[i]) {
+ 	swap(i, m);
+       }
+       done = true;
+@@ -363,9 +363,9 @@
+     
+     m = largestChildGrandchild(i);
+     if(isGrandchildOf(i, m)) {
+-      if(A[m] > A[i]) {
++      if(this->A[m] > this->A[i]) {
+ 	swap(i, m);
+-	if(A[m] < A[parent(m)]) {
++	if(this->A[m] < this->A[parent(m)]) {
+ 	  swap(m, parent(m));
+ 	}
+ 	//trickleDownMax(m);
+@@ -374,7 +374,7 @@
+ 	done = true;
+       }
+     } else {
+-      if(A[m] > A[i]) {
++      if(this->A[m] > this->A[i]) {
+ 	swap(i, m);
+       }
+       done = true;
+@@ -402,14 +402,14 @@
+   m = parent(i);
+   
+   if(isOnMinLevel(i)) {
+-	if (m && (A[i] > A[m])) {
++	if (m && (this->A[i] > this->A[m])) {
+ 	  swap(i, m);
+ 	  bubbleUpMax(m);
+ 	} else {
+ 	  bubbleUpMin(i);
+ 	} 
+   } else {
+-	if (m && (A[i] < A[m])) {
++	if (m && (this->A[i] < this->A[m])) {
+ 	  swap(i, m);
+ 	  bubbleUpMin(m);
+ 	} else {
+@@ -425,7 +425,7 @@
+   HeapIndex m;
+   m = grandparent(i);
+ 
+-  while (m && (A[i] < A[m])) {
++  while (m && (this->A[i] < this->A[m])) {
+ 	 swap(i,m);
+ 	 //bubbleUpMin(m);
+ 	 i = m;
+@@ -442,7 +442,7 @@
+   HeapIndex m;
+   m = grandparent(i);
+   
+-  while(m && (A[i] > A[m])) {
++  while(m && (this->A[i] > this->A[m])) {
+ 	swap(i,m);
+ 	//bubbleUpMax(m);
+ 	i=m;
+@@ -460,7 +460,7 @@
+   
+   *ostr << "[1]";
+   for(i=1; i<=size(); i++) {
+-	*ostr << " " << A[i];
++	*ostr << " " << this->A[i];
+ 	if(ostr->pcount() > 70) {
+ 	  cout << ostr->str() << endl;
+ 	  delete ostr;
+@@ -479,7 +479,7 @@
+ void BasicMinMaxHeap<T>::print() const {
+   cout << "[";
+   for (unsigned int i=1; i<=size(); i++) {
+-    cout << A[i].getPriority() <<",";
++    cout << this->A[i].getPriority() <<",";
+   }
+   cout << "]" << endl;
+ }
+@@ -503,19 +503,19 @@
+ template <class T>
+ void BasicMinMaxHeap<T>::insert(const T& elt) {
+ #ifdef SAVE_MEMORY 
+-  if (!A) {
++  if (!this->A) {
+     MY_LOG_DEBUG_ID("minmaxheap: re-allocation");
+-    A = allocateHeap(maxsize);
++    this->A = allocateHeap(this->maxsize);
+   }
+ #endif
+ 
+-  if(lastindex == maxsize) grow();
++  if(this->lastindex == this->maxsize) grow();
+ 
+   XXX cerr << "insert: " << elt << endl;
+ 
+-  lastindex++;
+-  A[lastindex] = elt;
+-  bubbleUp(lastindex);
++  this->lastindex++;
++  this->A[this->lastindex] = elt;
++  bubbleUp(this->lastindex);
+ }
+ 
+ // ----------------------------------------------------------------------
+@@ -524,11 +524,11 @@
+ 
+   assert(A);
+ 
+-  if(lastindex == 0) return false;
++  if(this->lastindex == 0) return false;
+ 
+   elt = A[1];
+-  A[1] = A[lastindex];
+-  lastindex--;
++  A[1] = A[this->lastindex];
++  this->lastindex--;
+   trickleDown(1);
+   
+   return true;
+@@ -566,7 +566,7 @@
+   assert(A);
+   
+   HeapIndex p;					// max
+-  if(lastindex == 0) return false;
++  if(this->lastindex == 0) return false;
+   
+   if(hasChildren(1)) {
+ 	p = largestChild(1);
+@@ -574,8 +574,8 @@
+ 	p = 1;
+   }
+   elt = A[p];
+-  A[p] = A[lastindex];
+-  lastindex--;
++  A[p] = A[this->lastindex];
++  this->lastindex--;
+   trickleDown(p);
+   
+   return true;
+@@ -587,7 +587,7 @@
+   
+   assert(A);
+   
+-  if(lastindex == 0) return false;
++  if(this->lastindex == 0) return false;
+ 
+   elt = A[1];
+   return true;
+@@ -600,7 +600,7 @@
+   assert(A);
+   
+   HeapIndex p;					// max
+-  if(lastindex == 0) return false;
++  if(this->lastindex == 0) return false;
+   
+   if(hasChildren(1)) {
+ 	p = largestChild(1);
+@@ -630,7 +630,7 @@
+ template <class T> 
+ void
+ BasicMinMaxHeap<T>::clear() {
+-  lastindex = 0;
++  this->lastindex = 0;
+ }
+ 
+ // ----------------------------------------------------------------------
+@@ -714,7 +714,7 @@
+   freeHeap(A);
+   /* restore the heap */
+   A = dup;
+-  lastindex = n;
++  this->lastindex = n;
+ }
+ 
+ 
+@@ -744,7 +744,7 @@
+   //heap must be empty
+   assert(this->size()==0);
+   for (i = 0; !full() && i<n; i++) {
+-    insert(arr[i]);
++    this->insert(arr[i]);
+   }
+   if (i < n) {
+     assert(i == this->maxsize);
+@@ -777,13 +777,13 @@
+ 
+   if(old) {
+ 	HeapIndex n = this->size();
+-	this->A = allocateHeap(this->maxsize);	/* allocate a new array */
++	this->A = this->allocateHeap(this->maxsize);	/* allocate a new array */
+ 	/* copy over the old values */
+ 	assert(this->maxsize > n);
+ 	for(HeapIndex i=0; i<=n; i++) {	/* why extra value? -RW */
+ 	  this->A[i] = old[i];
+ 	}	
+-	freeHeap(old);				/* free up old storage */
++	this->freeHeap(old);				/* free up old storage */
+   }
+ 
+ }
