@@ -1,6 +1,7 @@
-=sci-geosciences/qgis-2.0.1-r1 ~amd64
-=sci-geosciences/qgis-2.0.1-r2 ~amd64
-=sci-geosciences/qgis-2.0.1 ~amd64
-=sci-geosciences/qgis-2.2.0 ~amd64
-=sci-geosciences/qgis-2.6.0 ~amd64
+=sci-geosciences/qgis-2.10.1 ~amd64
 =sci-geosciences/qgis-2.8.1 ~amd64
+=sci-geosciences/qgis-2.6.0 ~amd64
+=sci-geosciences/qgis-2.2.0 ~amd64
+=sci-geosciences/qgis-2.0.1 ~amd64
+=sci-geosciences/qgis-2.0.1-r2 ~amd64
+=sci-geosciences/qgis-2.0.1-r1 ~amd64
