@@ -1,0 +1,71 @@
+#!/bin/bash
+#
+#BEGIN:
+#
+# usage: mkebuild <atom>
+#
+# This script creates files/directories for an ebuild. If atom includes a
+# version, then the build and keywords files is created.
+#
+#END:
+#
+set -eu -o pipefail
+
+function usage {
+  sed -e '0,/^#\s*BEGIN:$/d; /^#\s*END:\s*$/,$d; s/^#\s*/ /' < $0
+}
+
+
+atom="${1:?$'No atom given\n\n'"$(usage)"}"
+
+category=$(sed -e 's,^\([^/]*\)/.*,\1,' <<< "$atom")
+package=$(sed -e 's,^[^/]*/,,; s,-r[0-9][0-9]*$,,; s,-[0-9.]*$,,' <<<"$atom")
+version=${atom#"${category}/${package}-"}
+
+if [ "$version" == "${category}/${package}" ]; then
+  version=
+fi
+
+if [ -z "$version" -a "$category" == "$package" ]; then
+  echo "Invalid atom '$atom' given" >&2
+  exit 1
+elif [ "$version" == "$package" ]; then
+  echo "Invalid atom '$atom' given" >&2
+  exit 1
+fi
+
+#echo "atom=$atom"
+#echo "category=$category"
+#echo "package=$package"
+#echo "version=$version"
+#exit $?
+
+kwdir="${category}/${package}/files/portage-configs/package.keywords"
+
+mkdir -p "$kwdir"
+
+if [ -n "$version" ]; then
+  cat >"$kwdir/${package}.keywords" <<EOF
+${atom} ~amd64
+EOF
+
+  cat >"${category}/${package}/${package}-${version}.ebuild" <<\EOF
+# Copyright 1999-2016 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
+EAPI=5
+
+DESCRIPTION=""
+HOMEPAGE=""
+SRC_URI=""
+
+LICENSE=""
+SLOT="0"
+KEYWORDS="~amd64"
+IUSE=""
+
+DEPEND=""
+RDEPEND="${DEPEND}"
+EOF
+fi
