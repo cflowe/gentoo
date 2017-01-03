@@ -6,5 +6,5 @@ basedir=$(dirname $(realpath $0))
 
 for dir
 do
-  update $basedir $dir
+  update_manifest "$basedir" "$dir"
 done

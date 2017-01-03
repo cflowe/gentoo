@@ -10,4 +10,5 @@ basedir=$(dirname $0)
 (find "$basedir" -maxdepth 3 -name "*.ebuild" | xargs dirname \
   | sort | uniq | xargs find && echo metadata/layout.conf) \
   | cpio -o -H ustar --force-local \
-  -O "$basedir"/distfiles/cflowe-local.tar
+  -O "$basedir"/distfiles/cflowe-local.tar \
+  && bzip2 -f "$basedir"/distfiles/cflowe-local.tar 

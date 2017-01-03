@@ -1,13 +1,20 @@
 #!/bin/bash
-function update {
+function update_manifest {
   basedir="$1"
   dir="$2"
 
   find "$dir" -name '*.ebuild' -print0 \
     | xargs -r0i env PORTDIR_OVERLAY=$basedir DISTDIR=$dir ebuild {} manifest
+}
+
+function update {
+  basedir="$1"
+  dir="$2"
+
+  update_manifest "$basedir" "$dir"
 
   mkdir -p "$basedir/distfiles"
-  dist="$basedir/distfiles/$(basename ${dir}).tar"
+  dist="$basedir/distfiles/$(basename ${dir}).tar.bz2"
 
   echo "Creating $dist"
 
@@ -16,5 +23,5 @@ function update {
     --exclude .hg \
     --exclude .svn \
     --exclude CVS \
-    -c -f "$dist" .
+    -c -j -f "$dist" .
 }

@@ -6,5 +6,5 @@ basedir=$(dirname $(realpath $0))
 
 for dir in $(find $(dirname $0) -maxdepth 2 -mindepth 2 -type d ! -regex '.*/\.git/.*' 2>/dev/null)
 do
-  update $basedir $dir
+  update_manifest "$basedir" "$dir"
 done
