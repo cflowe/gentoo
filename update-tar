@@ -1,11 +1,13 @@
 #!/bin/bash
 
-set -e
+set -eu -o pipefail
 
-basedir=$(dirname $0)
+basedir=$(dirname "$(readlink -f "$0")")
 
 # This is missing profiles/repo_name since include that file would caused
 # duplicate repo names
+
+mkdir -p "$basedir"/distfiles/
 
 (find "$basedir" -maxdepth 3 -name "*.ebuild" | xargs dirname \
   | sort | uniq | xargs find && echo metadata/layout.conf) \
