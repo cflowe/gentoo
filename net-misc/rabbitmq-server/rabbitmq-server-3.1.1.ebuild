@@ -3,9 +3,10 @@
 # $Header: /var/cvsroot/gentoo-x86/net-misc/rabbitmq-server/rabbitmq-server-3.0.4.ebuild,v 1.1 2013/03/15 16:42:39 ultrabug Exp $
 
 EAPI="5"
-PYTHON_DEPEND="2"
 
-inherit eutils python systemd
+PYTHON_COMPAT=(python2_7)
+
+inherit eutils python-single-r1 systemd
 
 DESCRIPTION="RabbitMQ is a high-performance AMQP-compliant message broker written in Erlang."
 HOMEPAGE="http://www.rabbitmq.com/"

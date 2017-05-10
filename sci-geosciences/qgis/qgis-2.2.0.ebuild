@@ -5,10 +5,9 @@
 EAPI=5
 
 PYTHON_COMPAT=(python2_7)
-PYTHON_USE_WITH="sqlite"
-PYTHON_DEPEND="python? 2"
+PYTHON_REQ_USE="sqlite"
 
-inherit python cmake-utils eutils multilib
+inherit python-single-r1 cmake-utils eutils multilib
 
 DESCRIPTION="User friendly Geographic Information System"
 HOMEPAGE="http://www.qgis.org/"
