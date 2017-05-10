@@ -1,0 +1,4 @@
+=sys-cluster/kubectl-1.6.2-r1 ~amd64
+=sys-cluster/kubectl-1.6.2 ~amd64
+
+=dev-go/go-bindata-0_pre20151023 ~amd64
