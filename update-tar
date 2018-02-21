@@ -9,8 +9,10 @@ basedir=$(dirname "$(readlink -f "$0")")
 
 mkdir -p "$basedir"/distfiles/
 
-(find "$basedir" -maxdepth 3 -name "*.ebuild" | xargs dirname \
+cd $basedir
+
+(find . -mindepth 3 -maxdepth 3 -name "*.ebuild" | xargs dirname \
   | sort | uniq | xargs find && echo metadata/layout.conf) \
   | cpio -o -H ustar --force-local \
-  -O "$basedir"/distfiles/cflowe-local.tar \
-  && bzip2 -f "$basedir"/distfiles/cflowe-local.tar 
+  -O ./distfiles/cflowe-local.tar \
+  && bzip2 -f ./distfiles/cflowe-local.tar
